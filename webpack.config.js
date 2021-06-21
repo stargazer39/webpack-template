@@ -1,14 +1,30 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const package = require('./package.json');
 
 module.exports = {
-    entry: './src/index.ts',
+    entry: {
+        app: "./src/app.ts",
+        controller: "./src/controller.ts"
+    },
     devtool: 'inline-source-map',
     plugins: [
-        new CopyPlugin({
-            patterns: [
-                { from: path.join(__dirname, "src"), to: path.join(__dirname, "dist/") }
-            ]
+        new HtmlWebpackPlugin({
+            hash: true,
+            template: "./src/index.html",
+            title: "Home",
+            myPageHeader: "Hello World",
+            chunks: ['app'],
+            filename: "./views/index.html"
+        }),
+        new HtmlWebpackPlugin({
+            hash: true,
+            template: "./src/controller.html",
+            title: "Controller",
+            myPageHeader: "Hello World",
+            chunks: ['app','controller'],
+            filename: "./views/controller.html"
         })
     ],
     module: {
@@ -23,8 +39,11 @@ module.exports = {
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
     },
-    output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-    },
 };
+
+/* 
+new CopyPlugin({
+    patterns: [
+        { from: path.join(__dirname, "src"), to: path.join(__dirname, "dist/") }
+    ]
+}), */
