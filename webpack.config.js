@@ -30,7 +30,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.tdx?$/,
+                test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: /node_modules/,
             },
